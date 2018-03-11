@@ -226,6 +226,47 @@ function addCytoscapeListeners() {
     _this.stop();
   });
 
+  // start on cxttapstart (right-click mousedown or twofinger tabstart)
+  this.addListener(cy, 'cxttapstart', 'node', function (e) {
+    if (!_this.options.draw) return;
+
+    var node = e.target;
+
+    if (node.same(_this.handleNode)) {
+      _this.start(_this.sourceNode);
+    } else {
+      _this.start(node);
+    }
+  });
+
+  // update line on drag
+  this.addListener(cy, 'tapdrag', function (e) {
+    if (!_this.options.draw) return;
+
+    _this.update(e.position);
+  });
+
+  // hover over preview
+  this.addListener(cy, 'cxtdragover', 'node', function (e) {
+    if (!_this.options.draw) return;
+
+    _this.preview(e.target);
+  });
+
+  // hover out unpreview
+  this.addListener(cy, 'cxtdragout', 'node', function (e) {
+    if (!_this.options.draw) return;
+
+    _this.unpreview(e.target);
+  });
+
+  // stop gesture on cxttapend
+  this.addListener(cy, 'cxttapend', function () {
+    if (!_this.options.draw) return;
+
+    _this.stop();
+  });
+
   // hide handle if source node is removed
   this.addListener(cy, 'remove', function (e) {
     if (e.target.same(_this.sourceNode)) {
@@ -248,6 +289,7 @@ module.exports = { addCytoscapeListeners: addCytoscapeListeners };
 /* eslint-disable no-unused-vars */
 var defaults = {
   preview: true, // whether to show added edges preview before releasing selection
+  draw: false, // whether to enable drawing edges from node with right-click mousedrag or two-finger tabdrag
   hoverDelay: 150, // time spent hovering over a target node before it is considered selected
   handleNodes: 'node', // selector/filter function for whether edges can be made from a given node
   handlePosition: function handlePosition(node) {
@@ -564,7 +606,8 @@ function setHandleFor(node) {
       _this.handleNode = cy.add({
         classes: 'eh-handle',
         position: pos,
-        grabbable: false
+        grabbable: false,
+        selectable: false
       });
 
       _this.handleNode.style('z-index', 9007199254740991);
