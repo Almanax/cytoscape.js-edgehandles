@@ -5,6 +5,18 @@ function addCytoscapeListeners(){
   this.addListener( cy, 'drag', () => this.grabbingNode = true );
   this.addListener( cy, 'free', () => this.grabbingNode = false );
 
+    // show handle on hover
+    this.addListener( cy, 'ready', () => {
+        let pos = { x: 100, y: 100 };
+        cy.add({
+            group: 'nodes',
+            classes: 'ui-logo',
+            position: pos,
+            grabbable: false,
+            selectable: false
+        });
+    } );
+
   // show handle on hover
   this.addListener( cy, 'mouseover', 'node', e => {
     this.show( e.target );
