@@ -317,6 +317,9 @@ var defaults = {
     // NB: i indicates edge index in case of edgeType: 'node'
     return {};
   },
+  idValue: function idValue(sourceNode) {
+    return undefined;
+  },
   show: function show(sourceNode) {
     // fired when handle is shown
   },
@@ -485,6 +488,7 @@ function makeEdges() {
       y: (p1.y + p2.y) / 2
     };
   }
+  var id = options.idValue();
 
   if (edgeType === 'node') {
     var interNode = cy.add(addClassesToEleJson(assign({
@@ -514,6 +518,7 @@ function makeEdges() {
     var source2target = cy.add(addClassesToEleJson(assign({
       group: 'edges',
       data: {
+        id: id,
         source: source.id(),
         target: target.id()
       }
