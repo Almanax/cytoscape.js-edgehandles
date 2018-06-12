@@ -97,6 +97,10 @@ let defaults = {
     // NB: i indicates edge index in case of edgeType: 'node'
     return {};
   },
+  idValue: function() {
+      // callback that returns id for new edge
+      return undefined
+  },
   show: function( sourceNode ){
     // fired when handle is shown
   },

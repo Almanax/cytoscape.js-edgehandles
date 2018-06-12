@@ -141,7 +141,10 @@
 					}
 				});
 
-				var eh = cy.edgehandles({draw: true});
+				let counter = 0;
+				var seq = function () { console.log(counter); return counter++ }
+
+				var eh = cy.edgehandles({draw: true, idValue: seq});
 
 				document.querySelector('#draw-on').addEventListener('click', function() {
 					eh.enableDrawMode();

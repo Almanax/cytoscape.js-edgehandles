@@ -29,6 +29,9 @@ let defaults = {
     // NB: i indicates edge index in case of edgeType: 'node'
     return {};
   },
+  idValue: function( sourceNode ){
+    return undefined;
+  },
   show: function( sourceNode ){
     // fired when handle is shown
   },

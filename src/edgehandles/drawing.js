@@ -61,6 +61,7 @@ function makeEdges( preview = false ) {
       y: ( p1.y + p2.y ) / 2
     };
   }
+  let id = options.idValue();
 
   if( edgeType === 'node' ){
     let interNode = cy.add(
@@ -106,6 +107,7 @@ function makeEdges( preview = false ) {
         {
           group: 'edges',
           data: {
+            id: id,
             source: source.id(),
             target: target.id()
           }
